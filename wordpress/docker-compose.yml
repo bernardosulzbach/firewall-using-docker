@@ -1,18 +1,12 @@
 version: '3.3'
 
-
 services:
-  firewall:
-    image: firewall
-    restart: always
-    cap_add:
-      - ALL
   database:
-    depends_on:
-      - firewall
     image: mysql:5.7
     volumes:
       - database_data:/var/lib/mysql
+    networks:
+      - backend
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ee5058ec-da12-4903-abfc-9b2f5eb32f7d
@@ -21,17 +15,21 @@ services:
       MYSQL_PASSWORD: wordpress
   wordpress:
     depends_on:
-      - firewall
       - database
     image: wordpress:latest
-    ports:
-      - "80:80"
+    networks:
+      - frontend
+      - backend
     restart: always
     environment:
       WORDPRESS_DB_HOST: database:3306
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
+
+networks:
+  frontend:
+  backend:
 
 volumes:
   database_data: {}
