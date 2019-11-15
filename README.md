@@ -19,7 +19,7 @@ sudo docker-compose up
 ```
 
 ```bash
-# Figure out the wordpress_frontend_1 IP address.
+# Figure out the wordpress_wordpress_1 IP address.
 sudo docker network inspect wordpress_frontend
 # For me it was 172.25.0.2, so I will keep using this number.
 # The following line runs the firewall and sets a few things:
