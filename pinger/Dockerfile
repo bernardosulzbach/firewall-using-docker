@@ -17,5 +17,4 @@ ENTRYPOINT while [ True ]; do \
             done && \
            /bin/bash
 
-# r/AbsoluteUnits
 
