@@ -10,7 +10,10 @@ cd firewall
 sudo docker build -t firewall .
 cd ../pinger
 sudo docker build -t pinger .
+cd ../httpget
+sudo docker build -t httpget .
 cd ..
+
 ```
 
 ```bash
@@ -31,16 +34,24 @@ sudo docker network inspect wordpress_frontend
 #   The IPv4 WordPress has in this network.
 sudo docker run --privileged --network=wordpress_frontend --cap-add=NET_ADMIN --env=WORDPRESS_IP=172.25.0.2 --interactive --tty firewall bash
 
+# To test the connectivity use the container pinger
+
 # The following line runs the pinger and set the addresses to ping:
 #   The ADDRS variable must be a comma-separated list of the IPv4 addresses to ping
-#   The line bellow pings both the database and the wordpress services and also pings the firewall
-sudo docker run --env=ADDRS=172.25.0.1,172.25.0.2,172.25.0.3 --interactive --tty pinger bash 
 
-# For me, when the pinger runs outside the wordpress_frontend network it fails to reach both wordpress and firewall but is able to reach the database (which seems wrong)
+sudo docker run --env=ADDRS=172.25.0.2,172.25.0.3,172.26.0.2,172.26.0.3 --interactive --tty pinger bash 
+
 # To run the pinger inside the wordpress_frontend network use:
-sudo docker run --network=wordpress_frontend --env=ADDRS=172.25.0.1,172.25.0.2,172.25.0.3 --interactive --tty pinger bash 
 
-# When executed inside this network the pinger is able to reach all the three tested addresses
+sudo docker run --network=wordpress_frontend --env=ADDRS=172.25.0.2,172.25.0.3,172.26.0.2,172.26.0.3 --interactive --tty pinger bash 
+
+
+# To test HTTP requests to the wordpress container use the container httpget
+# The following line runs the container httpget inside the wordpress_frontend network 
+# For me, it was able to get the page from the firewall and the wordpress container of the wordpress_frontend network, but fails when attempts with the other IPs
+
+sudo docker run --network=wordpress_frontend --env=ADDRS=172.25.0.2,172.25.0.3,172.26.0.2,172.26.0.3 --interactive --tty httpget bash 
+
 
 ```
 
