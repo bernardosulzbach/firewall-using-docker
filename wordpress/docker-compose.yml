@@ -6,7 +6,8 @@ services:
     volumes:
       - database_data:/var/lib/mysql
     networks:
-      - backend
+      backend:
+        ipv4_address: 172.30.0.2
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ee5058ec-da12-4903-abfc-9b2f5eb32f7d
@@ -18,8 +19,8 @@ services:
       - database
     image: wordpress:latest
     networks:
-      - frontend
-      - backend
+      backend:
+        ipv4_address: 172.30.0.3
     restart: always
     environment:
       WORDPRESS_DB_HOST: database:3306
@@ -28,9 +29,8 @@ services:
       WORDPRESS_DB_NAME: wordpress
 
 networks:
-  frontend:
   backend:
-    internal: true
+    external: true
 
 volumes:
   database_data: {}

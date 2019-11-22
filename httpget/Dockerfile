@@ -9,7 +9,7 @@ ENTRYPOINT while [ True ]; do \
                 for addr in $(echo $ADDRS | sed "s/,/ /g"); do \
                     wget $addr -T 1 -t 1 -q -O /dev/null; status=$(echo $?) && \
                     if test $status = 0 ; then \
-                        echo "Sucessfully retrieved page from $addr"; \
+                        echo "Successfully retrieved page from $addr"; \
                         else echo "Failed to retrieve page from $addr"; \
                     fi; \
                 done; \
