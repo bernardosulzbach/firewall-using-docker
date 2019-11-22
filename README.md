@@ -6,9 +6,9 @@ Note: you might not need to `sudo` everything.
 
 For this project, static IPs were used to simplify the examples.
 
-172.30.0.2 (MySQL)
-172.30.0.3 (WordPress)
-172.30.0.4, 172.31.0.2 (Firewall)
++ 172.30.0.2 (MySQL)
++ 172.30.0.3 (WordPress)
++ 172.30.0.4, 172.31.0.2 (Firewall)
 
 ```bash
 # Build the images.
